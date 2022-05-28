@@ -16,19 +16,21 @@ const (
 	dbSource = "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable"
 )
 
-// Variable for tes query
 var testQueries *Queries
+var testDB *sql.DB
 
 func TestMain(m *testing.M) {
+	var err error
+
 	// Open connection
-	conn, err := sql.Open(dbDriver, dbSource)
+	testDB, err = sql.Open(dbDriver, dbSource)
 	// Check error
 	if err != nil {
 		log.Fatal("cannot connect to db:", err)
 	}
 
 	// Create new connection to db
-	testQueries = New(conn)
+	testQueries = New(testDB)
 
 	// Run test
 	os.Exit(m.Run())
