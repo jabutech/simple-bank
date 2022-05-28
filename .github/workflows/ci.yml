@@ -40,6 +40,13 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v3
 
+        # Install golang-migrate
+      - name: Install golang-migrate
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-arm64.tar.gz | tar xvz
+          Sudo mv migrate /usr/bin/
+          which migrate
+
       # Run migrations with code on file Makefile
       - name: Run migrations
         run: make migrateup
